@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="style.css">
+   <title><%= head %></title>
+</head>
+<body>
+<div class="wrapper">
+   <form id="app" class="app" autocomplete="off">
+      <div class="app__inner">
+         <div id="inputs" class="app__inputs">
+            <% if (locals.isIndex) { %>
+               
+               
+            <% } else{ %>
+               <textarea id="title" data-type="main-input" name="title" class="app__input app__input--title" type="text" placeholder="Title" readonly><%= title %></textarea>
+               <textarea id="author" data-type="main-input" name="author" class="app__input app__input--author"  type="text" placeholder="Your name" readonly><%= author %></textarea>
+
+               <% for(let i = 0; i < content.length; i++) { %>
+                  <% if (i === 0) { %>
+                     <textarea id="content" data-type="main-input" name="content" class="app__input app__input--content" type="text" placeholder="Your story..." readonly><%= content[i] %></textarea>
+                  <% } else{ %>
+                     <textarea name="content" class="app__input app__input--content" type="text" readonly><%= content[i] %></textarea>
+                  <% } %>
+               <% } %>
+            <% } %>
+         </div>
+         
+
+         <% if (locals.isIndex) { %>
+            <button class="app__btn" id="publish" type="submit" formaction="/notes" formmethod="POST">Publish</button>
+         <% } else{ %>
+            <button class="app__btn" id="publish" type="submit" style="display: none;" formaction="/notes/<%= id %>" formmethod="POST">Publish</button>
+            <button class="app__btn" id="edit">Edit</button>
+         <% } %>
+      </div>
+   </form>
+</div>
+<% if (locals.isIndex) { %>
+   <script src="/validation.js"></script>
+   <script src="/index.js"></script>
+<% } else{ %>
+   <script src="/validation.js"></script>
+   <script src="/editor.js"></script>
+   <script src="/template.js"></script>
+<% } %>
+</body>
+</html>
